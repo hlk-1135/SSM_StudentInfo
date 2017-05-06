@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hlk.dao.UserMapper">
+
+    <resultMap id="userMap" type="com.hlk.pojo.User">
+        <id property="id" column="id"/>
+        <result property="user_name" column="user_name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.hlk.pojo.User">
+        INSERT  INTO USER (user_name,password) VALUES (#{user_name},#{password})
+    </insert>
+    <select id="getUserByUserName" resultType="com.hlk.pojo.User" parameterType="string">
+      <![CDATA[
+        SELECT * FROM USER WHERE user_name=#{user_name}
+      ]]>
+    </select>
+</mapper>

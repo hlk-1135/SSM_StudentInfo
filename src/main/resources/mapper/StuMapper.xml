@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hlk.dao.StuMapper">
+
+    <resultMap id="stuMap" type="com.hlk.pojo.Stu">
+        <id property="stuId" column="stuId"/>
+        <result property="stuName" column="stuName"/>
+        <result property="stuAge" column="stuAge"/>
+        <result property="stuMajor" column="stuMajor"/>
+
+        <association property="user" javaType="com.hlk.pojo.User">
+            <id property="id" column="id"/>
+            <result property="user_name" column="user_name"/>
+            <result property="password" column="password"/>
+        </association>
+    </resultMap>
+
+    <insert id="addStu" useGeneratedKeys="true" keyProperty="id" parameterType="com.hlk.pojo.Stu">
+      <![CDATA[
+        INSERT  INTO stu (stuName,stuAge,stuMajor,id) VALUES (#{stuName},#{stuAge},#{stuMajor},1)
+      ]]>
+    </insert>
+
+    <delete id="delStu" parameterType="int">
+        <![CDATA[
+          delete from stu WHERE stuId=#{stuId}
+        ]]>
+    </delete>
+
+    <update id="updateStu" parameterType="com.hlk.pojo.Stu">
+        <![CDATA[
+          update stu set stuName=#{stuName},stuAge=#{stuAge},stuMajor=#{stuMajor} where stuId=#{stuId}
+        ]]>
+    </update>
+
+    <select id="getStuById" resultType="com.hlk.pojo.Stu" parameterType="int">
+      <![CDATA[
+        SELECT * FROM stu WHERE stuId=#{stuId}
+      ]]>
+    </select>
+
+    <select id="getStuList" parameterType="int" resultMap="stuMap">
+        <![CDATA[
+          select * from stu
+        ]]>
+    </select>
+</mapper>
